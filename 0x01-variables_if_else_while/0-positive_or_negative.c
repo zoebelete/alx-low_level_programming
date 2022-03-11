@@ -3,10 +3,9 @@
 #include <time.h>
 /**
  *
- * main - Lanzador
+ * main - Entry point
  *
- * Return: Always 0
- *
+ * Return: Always 0 (succes)
  */
 
 int main(void)
