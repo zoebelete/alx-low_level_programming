@@ -1,10 +1,9 @@
-#!/bin/bash
 #include <stdio.h>
 
 /**
- * main - Prints quote
+ * main - Entry point
  *
- * Return:Zero on success
+ * Return: Always 0 (success)
  *
  */
 int main(void)
