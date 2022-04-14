@@ -1,44 +1,38 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "3-calc.h"
-
 /**
- * main - Principal
- *
- * @ac: count arguments
- * @ag: array
- *
- * Return: Always 0
- */
-int main(int arc, char *arg[])
+  *main - check arguments
+  *@argc: argument 1
+  *@argv: argument 2
+  *
+  *Return: error if number of arguments is wrong
+  */
+int main(int argc, char *argv[])
 {
-	int num1, num2, (*operate)(int, int);
+	int a = 0, b = 0, res = 0;
+	char s;
 
-	if (arc != 4)
+	if (argc != 4)
 	{
 		printf("Error\n");
 		exit(98);
 	}
-	if ((*arg[2] != '+' &&
-		*arg[2] != '-' &&
-		*arg[2] != '/' &&
-		*arg[2] != '*' &&
-		*arg[2] != '%')
-		|| arg[2][1] != '\0')
+  
+	if (argv[2][1] != '\0')
 	{
 		printf("Error\n");
 		exit(99);
 	}
 
-	num1 = atoi(arg[1]);
-	num2 = atoi(arg[3]);
-	if ((*arg[2] == '/' || *arg[2] == '%') && (num2 == 0))
+	s = argv[2][0];
+	if (s != '+' && s != '-' && s != '/' && s != '*' && s != '%')
 	{
 		printf("Error\n");
-		exit(100);
+		exit(99);
 	}
-	operate = get_op_func(arg[2]);
-	printf("%d\n", operate(num1, num2));
-	return (0);
 
+	a = atoi(argv[1]);
+	b = atoi(argv[3]);
+	res = (get_op_func(argv[2]))(a, b);
+	printf("%d\n", res);
+	return (0);
 }
