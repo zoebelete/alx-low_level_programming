@@ -1,53 +1,52 @@
 #include "lists.h"
 
 /**
- * insert_dnodeint_at_index - inserts a new node at given index in the list
- * @head: pointer to head of the list
- * @idx: index to add at, starting from 0
- * @n: value of new node
- * Return: new node or null
- **/
-dlistint_t *insert_dnodeint_at_index(dlistint_t **head, unsigned int idx, int n)
+ * insert_dnodeint_at_index - inserts a new node at a given index
+ * @h: pointer to head of doubly linked list
+ * @idx: index of new node, starting from 0
+ * @n: data of the new node
+ * Return: address of the new node or NULL if the node doesn't exist
+ */
+dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 {
-	unsigned int count;
-	dlistint_t *tmp, *new, *tmp_prev;
+	unsigned int node = 0;
+	dlistint_t *tmp = *h;
+	dlistint_t *new;
 
-	if (head == NULL && idx > 0)
-	return (NULL);
+	if (!h)
+		return (0);
 	new = malloc(sizeof(dlistint_t));
-	if (new == NULL)
-		return (NULL);
-	new->n = n, new->prev = new->next = NULL;
-
-	if (idx == 0)
+	if (!new)
+		return (0);
+	new->n = n;
+	if (!idx)
 	{
-		if (*head)
-	{
-		new->next = *head;
-		(*head)->prev = new, *head = new;
-	}
-		else
-			*head = new;
+		free(new);
+		new = add_dnodeint(h, n);
 		return (new);
 	}
-	count = 1, tmp = (*head)->next;
-	while (tmp)
+	if (*h)
 	{
-		if (idx == count)
+		while (tmp)
 		{
-			tmp->prev->next = new, new->prev = tmp->prev;
-			new->next = tmp, tmp->prev = new;
+			if (node == idx)
+			{
+				new->prev = tmp->prev;
+				new->next = tmp;
+				(tmp->prev)->next = new;
+				tmp->prev = new;
+				return (new);
+			}
+			node++;
+			tmp = tmp->next;
+		}
+		if (!tmp && node == idx)
+		{
+			free(new);
+			new = add_dnodeint_end(h, n);
 			return (new);
 		}
-		count++;
-		tmp_prev = tmp;
-		tmp = tmp->next;
-	}
-	if (tmp == NULL && count == idx)
-	{
-		tmp_prev->next = new, new->prev = tmp_prev;
-		return (new);
 	}
 	free(new);
-	return (NULL);
+	return (0);
 }
